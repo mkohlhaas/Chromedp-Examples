@@ -1,0 +1,41 @@
+/* The printed report. The screen view looks like a document, and the print view uses pages.
+
+   This file sets no @page rule, so the program that prints chooses the paper, the orientation and the margins
+   with the options of PrintToPDF (PDFPaper, PDFLandscape, PDFMargins). An @page size or margin would win over
+   these options. Chrome does not support running elements, and a position: fixed element repeats on every
+   page at the same place but takes no room, so it lands on the content. For this reason the report has no
+   fixed header or footer. It has a title block at the top of the document and a table header that
+   repeats on each page. A program that wants a header and a footer on each page passes PDFHeaderTemplate and
+   PDFFooterTemplate. The page /print/report?paper=css loads print-a4.css, which sets
+   the paper size and uses @page margin boxes. */
+.report { max-width: 900px; margin: 0 auto; padding: 24px 16px 60px; }
+.print-header { display: none; font-size: 8.5pt; }
+.cover { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 40px; margin-bottom: 28px; }
+.cover h1 { font-size: 3rem; margin: 0.1em 0; }
+.cover-sub { font-size: 1.4rem; color: var(--muted); margin-top: 0; }
+.cover img { border: 1px solid var(--line); border-radius: 8px; margin: 18px 0; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; font-weight: 700; color: var(--brand-dark); margin: 0; }
+.contents ol { columns: 2; }
+.chapter { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 28px 32px; margin-bottom: 24px; }
+.chapter h2 { margin-top: 0; display: flex; gap: 12px; align-items: baseline; }
+.chapter-no { color: var(--brand); font-variant-numeric: tabular-nums; }
+.note { font-size: 0.85rem; color: var(--muted); }
+
+@media print {
+  body { background: #fff; color: #000; font-size: 11pt; line-height: 1.45; }
+  .site-header, .site-footer, .skip-link { display: none; }
+  .report { max-width: none; padding: 0; margin: 0; }
+  .print-header { display: block; color: #555; border-bottom: 0.5pt solid #999; padding-bottom: 2mm; margin-bottom: 8mm; }
+  .cover, .chapter { border: 0; border-radius: 0; padding: 0; margin: 0; background: none; }
+  .cover { break-after: page; }
+  .chapter { break-before: page; }
+  .cover img { width: 100%; height: auto; }
+  h1, h2, h3, caption { break-after: avoid; }
+  table { font-size: 9.5pt; }
+  thead { display: table-header-group; }
+  tr, figure, blockquote { break-inside: avoid; }
+  th, td { padding: 3pt 6pt; border-bottom: 0.5pt solid #bbb; }
+  thead th { position: static; background: #eee; }
+  tbody tr:nth-child(even) { background: #f6f6f6; }
+  a { color: inherit; text-decoration: none; }
+}
