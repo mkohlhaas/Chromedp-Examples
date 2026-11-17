@@ -141,6 +141,35 @@ directory of their flag `-out`.
 | [workers](/workers)               | run many jobs at the same time in one browser with a pool of goroutines                                                                  |
 <!-- END EXAMPLES -->
 
+## A reading order for learning chromedp
+
+The examples do not need to be read in alphabetic order. Start with `click/main.go`. It shows the setup that most programs repeat. The setup has flags, a local site, a browser context, a timeout, `Navigate`, `WaitVisible` and actions that read or change the page. A browser context holds the browser state for one program. A timeout stops a program that waits too long. Skip `termstream` and `-visible` on the first pass. That code draws the page in the terminal or leaves the browser open.
+
+Read `text`, `eval` and `structeval` next. They show how to read page content and how JavaScript results become Go values. Then read `selectors` as a catalog of typed selectors. A typed selector names a way to find an element on the page. These five programs teach the main loop of `chromedp`.
+
+After that, read the programs in this table. Run each program as you read it. Add `-v` to see the protocol messages. The expected output of the offline programs is in `AGENTS.md`.
+
+| Step | Read | What it teaches | First command |
+| --- | --- | --- | --- |
+| 1 | `README.md`, then `click/main.go` | The shared setup: flags, local site, browser context, timeout, `Navigate`, `WaitVisible` and actions | `go run ./click` |
+| 2 | `text`, `eval`, `structeval` | Text extraction, JavaScript evaluation and typed Go results | `go run ./text` |
+| 3 | `selectors` | CSS, ID, XPath, `JSPath`, `NodeIDs`, `ByFunc` and node options | `go run ./selectors` |
+| 4 | `visible`, `keys`, `dialogs`, `dragdrop`, `submit`, `upload`, `logic` | Waiting, input, dialogs, drag and drop, forms, file upload and Go loops around browser actions | `go run ./logic` |
+| 5 | `frames`, `subtree`, `contexts`, `workers` | Iframes, shadow roots, JavaScript contexts and concurrent jobs | `go run ./frames` |
+| 6 | `console`, `eventsiter`, `timeline`, `latlon` | Browser events, their order and navigation events | `go run ./console` |
+| 7 | `headers`, `cookie`, `intercept`, `har`, `rawcall` | Requests, responses and raw protocol commands | `go run ./intercept` |
+| 8 | `emulate`, `session`, `popups`, `tabs` | Device state, saved state and several targets | `go run ./session` |
+| 9 | `screenshot`, `pdf`, `pdfoptions`, `pdfstream`, `screencast`, `download_file`, `download_image` | Images, PDF files and downloads | `go run ./screenshot` |
+| 10 | `exposefunc`, `proxy`, `remote`, `extension`, `distrust`, `fast`, `forecast`, `geoip`, `termcast`, `multi` | Special setup. Read these only when the task needs them | `go run ./exposefunc` |
+
+`multi` needs a container tool. `fast`, `forecast`, `geoip` and `termcast` need a terminal that shows images. `distrust` needs Podman or Docker and reads a live test page.
+
+Plan on about 30 hours to read and run all 46 examples with care. You can reach a useful understanding of `chromedp` after about 12 to 15 hours, because the first 15 programs teach most of the library.
+
+The programs hold about 10,800 lines of Go. Much of that is repeated setup for flags, the local test site, the browser context, the timeout and terminal graphics. After you know that block in `click/main.go`, you can skim it in the other programs. The real learning is in the action calls, selectors, events, network commands and target handling.
+
+The first 10 examples take about 4 to 6 hours. Run each one and compare the output with `AGENTS.md`. The next 15 take about 6 to 8 hours. They cover frames, events, network commands and browser state. The last 21 take about 12 to 16 hours. Many of them teach extra setup for images, files, containers, remote browsers and extensions. At 90 minutes a day, the full path takes about three weeks.
+
 The programs `fast`, `forecast`, `geoip` and `remote` draw an image in the
 terminal. Run them in a terminal that can show images. Most other programs have
 the flag `-visible-on-terminal`, which the section [Draw the page in the
