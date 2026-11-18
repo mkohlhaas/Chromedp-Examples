@@ -61,7 +61,11 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer s.Stop()
+	defer func() {
+		if err := s.Stop(); err != nil {
+			log.Printf("stopping the stream: %v", err)
+		}
+	}()
 	log.SetOutput(s.LogWriter())
 
 	// create a timeout

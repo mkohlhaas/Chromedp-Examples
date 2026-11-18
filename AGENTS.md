@@ -106,7 +106,7 @@ you trust it, because a later decision can amend or replace it.
 | `geoip/GeoLite2-City.mmdb` | the IP database that `geoip` embeds |
 | `geoip/README.md`, `multi/README.md`, `remote/README.md` | the usage notes of the program |
 | `multi/Dockerfile` | the container image of `multi` |
-| `internal/testsite/` | the local test site that the programs read, with its `README.md`, its tests and `gen/main.go` |
+| `internal/testsite/` | the local test site that the programs read, with its `README.md`, its tests, its generator `gen/main.go` and its dev server `serve/main.go` |
 | `gen.go` | writes the table of the programs in `README.md`. Run `go run gen.go` |
 | `docs/decisions/` | the decisions and their index |
 | `docs/docs_test.go` | the test of the documents and the Go comments |
