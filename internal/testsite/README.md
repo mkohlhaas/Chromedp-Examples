@@ -103,3 +103,13 @@ The pages, the articles, the forecasts, the IP ranges, the tiles and the archive
 ## Tests
 
 `go test ./internal/testsite/` needs no browser. It loads each page with an HTTP client. It checks the status, the landmarks that the programs use, the sizes, the unique ids and that no page refers to another host.
+
+## Browse the site yourself
+
+The command `go run ./internal/testsite/serve` starts the site and keeps it running. It prints the two addresses of the site. Keep the terminal open while you read the pages. Press Ctrl-C to stop the site.
+
+The site uses a free port, so the address differs each time. Copy the address that the command prints.
+
+You can open a page in a browser. You can also point a program at the running site with the flag `-url`. The program then reads the running site and does not start its own copy. For example, `go run ./click -url http://127.0.0.1:41233/docs/time` reads the page of the running site.
+
+The pages of the map, the weather tabs and the download button need JavaScript. Open them in a browser to use them. `curl` answers the pages that need no script, such as `/api/geoip?ip=8.8.8.8`.
